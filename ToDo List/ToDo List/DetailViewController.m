@@ -6,13 +6,18 @@
 //  Copyright © 2016 DEVTYPE. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "DetailViewController.h"
 
-@interface ViewController ()
+
+@interface DetailViewController ()
+
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 
 @end
 
-@implementation ViewController
+
+@implementation DetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
