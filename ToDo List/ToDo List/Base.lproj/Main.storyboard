@@ -27,11 +27,17 @@
                             <outlet property="delegate" destination="WxE-1N-QoR" id="rAY-wG-WUm"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="Yuu-Vw-5LL"/>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="Yuu-Vw-5LL">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="EuU-o6-GOP">
+                            <connections>
+                                <segue destination="BYZ-38-t0r" kind="push" id="GKt-nt-efg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uha-rX-ZJC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="355" y="1103"/>
+            <point key="canvasLocation" x="148" y="903"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="k4U-8u-mD9">
@@ -47,7 +53,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y1y-UI-ee9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-185" y="1103"/>
+            <point key="canvasLocation" x="-362" y="903"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -58,10 +64,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="KuO-ez-fnT"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="162.66666666666666" y="396.18000000000001"/>
+            <point key="canvasLocation" x="688" y="903"/>
         </scene>
     </scenes>
 </document>
