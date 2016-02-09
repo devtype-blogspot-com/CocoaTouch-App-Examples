@@ -9,7 +9,7 @@
 #import "DetailViewController.h"
 
 
-@interface DetailViewController ()
+@interface DetailViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
@@ -27,6 +27,17 @@
     [self.buttonSave addTarget:self
                         action:@selector(save)
               forControlEvents:UIControlEventTouchUpInside];
+    
+    UITapGestureRecognizer *handleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+        action:@selector(handleEndEditing)];
+    [self.view addGestureRecognizer:handleTap];
+}
+
+- (void)handleEndEditing
+{
+    // свернуть текстовое поле по тапу (касанию) на бэкграунд мобильного приложения
+    [self.view endEditing:YES];
+    // [self.textField resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,6 +47,14 @@
 
 - (void)save {
     NSLog(@"save");
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if ([textField isEqual:self.textField]) {
+        [textField resignFirstResponder]; // свернуть текстовое поле
+    }
+    return YES;
 }
 
 @end
