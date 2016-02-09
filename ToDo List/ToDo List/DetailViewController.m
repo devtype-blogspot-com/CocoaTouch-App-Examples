@@ -24,6 +24,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    self.datePicker.minimumDate = [NSDate date];
+    [self.datePicker addTarget:self
+                        action:@selector(datePickerValueChanged)
+              forControlEvents:UIControlEventValueChanged];
+    
     [self.buttonSave addTarget:self
                         action:@selector(save)
               forControlEvents:UIControlEventTouchUpInside];
@@ -31,6 +36,14 @@
     UITapGestureRecognizer *handleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
         action:@selector(handleEndEditing)];
     [self.view addGestureRecognizer:handleTap];
+}
+
+- (void)datePickerValueChanged
+{
+    // метод, который будет вызываться при прокручивании UIDatePicker
+    
+    self.eventDate = self.datePicker.date;
+    NSLog(@"date Picker %@", self.eventDate);
 }
 
 - (void)handleEndEditing

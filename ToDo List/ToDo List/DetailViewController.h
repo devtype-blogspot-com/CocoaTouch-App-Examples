@@ -10,6 +10,7 @@
 
 @interface DetailViewController : UIViewController
 
+@property (strong, nonatomic) NSDate *eventDate;
 
 @end
 
