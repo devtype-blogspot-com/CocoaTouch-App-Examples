@@ -26,7 +26,13 @@
     
     if (self.isDetail) {
         self.textField.text = self.eventInfo;
-        self.datePicker.date = self.eventDate;
+        
+        // при просмотре деталей, активировать текстовое поле будет невозможно
+        self.textField.userInteractionEnabled = NO;
+        self.datePicker.userInteractionEnabled = NO;
+        self.buttonSave.alpha = 0;
+        
+        [self performSelector:@selector(setDatePickerValueWithAnimation) withObject:nil afterDelay:0.5];
     } else {
         self.buttonSave.userInteractionEnabled = NO;
         
@@ -43,6 +49,11 @@
             action:@selector(handleEndEditing)];
         [self.view addGestureRecognizer:handleTap];
     }
+}
+
+- (void)setDatePickerValueWithAnimation
+{
+    [self.datePicker setDate:self.eventDate animated:YES];
 }
 
 - (void)datePickerValueChanged
@@ -97,6 +108,8 @@
     notification.applicationIconBadgeNumber = 1;
     notification.soundName = UILocalNotificationDefaultSoundName;
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
