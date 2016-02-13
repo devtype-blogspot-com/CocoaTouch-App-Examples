@@ -24,20 +24,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.buttonSave.userInteractionEnabled = NO;
-    
-    self.datePicker.minimumDate = [NSDate date];
-    [self.datePicker addTarget:self
-                        action:@selector(datePickerValueChanged)
-              forControlEvents:UIControlEventValueChanged];
-    
-    [self.buttonSave addTarget:self
-                        action:@selector(save)
-              forControlEvents:UIControlEventTouchUpInside];
-    
-    UITapGestureRecognizer *handleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-        action:@selector(handleEndEditing)];
-    [self.view addGestureRecognizer:handleTap];
+    if (self.isDetail) {
+        self.textField.text = self.eventInfo;
+        self.datePicker.date = self.eventDate;
+    } else {
+        self.buttonSave.userInteractionEnabled = NO;
+        
+        self.datePicker.minimumDate = [NSDate date];
+        [self.datePicker addTarget:self
+                            action:@selector(datePickerValueChanged)
+                  forControlEvents:UIControlEventValueChanged];
+        
+        [self.buttonSave addTarget:self
+                            action:@selector(save)
+                  forControlEvents:UIControlEventTouchUpInside];
+        
+        UITapGestureRecognizer *handleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+            action:@selector(handleEndEditing)];
+        [self.view addGestureRecognizer:handleTap];
+    }
 }
 
 - (void)datePickerValueChanged
