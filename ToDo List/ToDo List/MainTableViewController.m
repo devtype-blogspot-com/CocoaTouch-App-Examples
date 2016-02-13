@@ -7,6 +7,7 @@
 //
 
 #import "MainTableViewController.h"
+#import "DetailViewController.h"
 
 
 @interface MainTableViewController ()
@@ -55,6 +56,21 @@
     return cell;
 }
 
+- (void)tableView:(nonnull UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    // снять выделение с ячейки
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"detailView"];
+    [self.navigationController pushViewController:detailView animated:YES];
+    
+    UILocalNotification *notification = [self.arrayEvents objectAtIndex:indexPath.row];
+    NSDictionary *dict = notification.userInfo;
+
+    detailView.eventInfo = [dict objectForKey:@"eventInfo"];
+    detailView.eventDate = [notification fireDate];
+    detailView.isDetail = YES;
+}
 
 /*
 // Override to support conditional editing of the table view.
