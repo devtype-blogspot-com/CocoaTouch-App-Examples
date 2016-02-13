@@ -24,6 +24,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    self.buttonSave.userInteractionEnabled = NO;
+    
     self.datePicker.minimumDate = [NSDate date];
     [self.datePicker addTarget:self
                         action:@selector(datePickerValueChanged)
@@ -48,9 +50,12 @@
 
 - (void)handleEndEditing
 {
-    // свернуть текстовое поле по тапу (касанию) на бэкграунд мобильного приложения
-    [self.view endEditing:YES];
-    // [self.textField resignFirstResponder];
+    if (self.textField.text.length != 0) {
+        [self.view endEditing:YES];
+        self.buttonSave.userInteractionEnabled = YES;
+    } else {
+        [self showAlertWithMessage:@"Для сохранения события введите значение в текстовое поле"];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,6 +64,21 @@
 }
 
 - (void)save {
+    if (self.eventDate) {
+        if ([self.eventDate compare:[NSDate date]] == NSOrderedSame) {
+            [self showAlertWithMessage:@"Дата будущего события не может совпадать с текущей датой"];
+        } else if ([self.eventDate compare:[NSDate date]] == NSOrderedAscending) {
+            [self showAlertWithMessage:@"Дата будущего события не может быть ранее текущей даты"];
+        } else {
+            [self setNotification];
+        }
+    } else {
+        [self showAlertWithMessage:@"Для сохранения события измените значение даты на более позднее"];
+    }
+}
+
+- (void)setNotification
+{
     NSString *eventInfo = self.textField.text;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HH:mm dd.MMMM.yyyy"];
@@ -77,9 +97,28 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if ([textField isEqual:self.textField]) {
-        [textField resignFirstResponder]; // свернуть текстовое поле
+        if (textField.text.length != 0) {
+            [textField resignFirstResponder]; // свернуть текстовое поле
+            self.buttonSave.userInteractionEnabled = YES;
+            return YES;
+        } else {
+            [self showAlertWithMessage:@"Для сохранения события введите значение в текстовое поле"];
+        }
     }
-    return YES;
+    
+    return NO;
+}
+
+- (void)showAlertWithMessage:(NSString *)message
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Внимание!"
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
+                                                 style:UIAlertActionStyleDefault
+                                               handler:^(UIAlertAction * __nonnull action) {}];
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
